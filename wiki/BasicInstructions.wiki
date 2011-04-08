@@ -1,4 +1,5 @@
-Introduction
+#labels Phase-Deploy,Phase-Requirements
+= Introduction =
 Feature selection is a pattern recognition approach to choose important
 variables according to some criteria to distinguish or explain
 certain phenomena. There are many genomic and proteomic applications
@@ -15,7 +16,7 @@ this work is to provide an open-source multiplataform graphical environment
 to apply, test and compare many feature selection approaches
 suitable to be used in bioinformatics problems.
 
-Details
+= Details =
 The source code, java binary (jar file) and documentation are available here.
 
 The source codes are packed in file src-1.26.zip.
@@ -28,7 +29,7 @@ The JRE is free and is available for different operating systems.
 
 You can run JAR-packaged applications with the Java interpreter.
 
-The basic command is:
+= The basic command is: =
 
 java -jar dimreduction.jar
 
