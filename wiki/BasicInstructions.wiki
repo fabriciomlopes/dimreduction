@@ -23,6 +23,6 @@ java -jar dimreduction.jar
 or just double click on dimreduction.jar, if the JRE is visible in your operating system.
 
 Running on the console
-If you need to execute a console version with various simulations, you can use the following instructions to execute the jAGN software:
+If you need to execute a console version with various simulations, you can use the following instructions to execute the DimReduction software:
 
 java -jar dimreduction.jar
