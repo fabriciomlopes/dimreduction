@@ -1,4 +1,4 @@
-#labels Phase-Deploy,Phase-Requirements
+#labels Phase-Deploy,Phase-Requirements,Featured
 = Introduction =
 Feature selection is a pattern recognition approach to choose important
 variables according to some criteria to distinguish or explain
@@ -29,7 +29,7 @@ The JRE is free and is available for different operating systems.
 
 You can run JAR-packaged applications with the Java interpreter.
 
-= The basic command is: =
+== The basic command is: ==
 
 java -jar dimreduction.jar
 
