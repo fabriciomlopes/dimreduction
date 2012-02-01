@@ -199,6 +199,7 @@ public class AGNRoutines {
             //node.setUserObject(agn.getGenes()[gt].getProbsetname());
             vertex.add(node);
             Color cor = MainMarieAnne.getBGColor(agn.getGenes()[gt]);
+
             GraphConstants.setGradientColor(vertex.get(gt).getAttributes(), cor);
         }
         if (count > 0.5 * agn.getNrgenes()) {//mais da metade dos genes da rede esta com coordenada 0,0

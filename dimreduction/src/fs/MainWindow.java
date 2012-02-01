@@ -2264,7 +2264,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        IOFile.SaveTable(jT_InputData);
+        IOFile.saveTableInFile(jT_InputData);
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
@@ -2643,7 +2643,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        IOFile.SaveTable(jT_QuantizedData);
+        IOFile.saveTableInFile(jT_QuantizedData);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jSliderCVStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderCVStateChanged

@@ -29,8 +29,11 @@
 /***************************************************************************/
 package agn;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class CNMeasurements {
 
@@ -40,8 +43,11 @@ public class CNMeasurements {
     public static void FindCycle(float[][] M) {
         int rows = M.length;
         int cols = M[0].length;
-        Vector<StringBuffer> features = new Vector<StringBuffer>();
+        List<Integer> col1 = new ArrayList<Integer>();
+        List<String> col2 = new ArrayList<String>();
+        List<StringBuffer> features = new ArrayList<StringBuffer>();
         int nrcycles = 0;
+
         for (int i = 0; i < cols; i++) {
             //carrega a string composta pelos elementos de cada coluna.
             StringBuffer str = new StringBuffer();
@@ -51,10 +57,8 @@ public class CNMeasurements {
             //busca sequencial por uma string equivalente que ja foi lida.
             for (int k = 0; k < features.size(); k++) {
                 if (features.get(k).toString().equals(str.toString())) {
-                    StringBuffer res = new StringBuffer();
-                    res.append("\nCycle found.\nSize = " + (i - k));
-                    res.append("\nBetween columns: " + k + " and " + i + ".");
-                    JOptionPane.showMessageDialog(null, res.toString(), "Application Information", JOptionPane.INFORMATION_MESSAGE);
+                    col1.add((i + k));
+                    col2.add(String.format("%5d and %5d", k, i));
                     nrcycles++;
                 }
             }
@@ -62,6 +66,35 @@ public class CNMeasurements {
         }
         if (nrcycles == 0) {
             JOptionPane.showMessageDialog(null, "Cycles had not been found.", "Application Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String[] colunas = {"Size", "Between columns"};
+            DefaultTableModel model = new DefaultTableModel(col1.size(), colunas.length) {
+                // necessário para ordenar as colunas corretamente. 
+                // diz que a primeira coluna tem valores inteiros.
+
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    if (column == 0) {
+                        return Integer.class;
+                    } else {
+                        return super.getColumnClass(column);
+                    }
+                }
+
+                // não poder editar as células do JTable
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            };
+
+            model.setColumnIdentifiers(colunas);
+
+            for (int i = 0; i < nrcycles; i++) {
+                model.setValueAt(col1.get(i), i, 0);
+                model.setValueAt(col2.get(i), i, 1);
+            }
+            new CicleWindow(model);
         }
     }
 
@@ -84,7 +117,7 @@ public class CNMeasurements {
 
     public static boolean hasVariation(char[][] M, int col) {
         boolean change = false;
-        if (col > M[0].length - 1){
+        if (col > M[0].length - 1) {
             return false;
         }
         //verifica se ha variacao na ultima coluna.
