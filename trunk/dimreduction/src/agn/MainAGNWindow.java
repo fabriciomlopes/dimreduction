@@ -43,7 +43,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -871,8 +870,8 @@ public class MainAGNWindow extends javax.swing.JFrame {
         }
         float prob = 0;
         if (networkmodel.equalsIgnoreCase("WS")) {
-            String strv = JOptionPane.showInputDialog("Select the probability" +
-                    " from 0 to 1 of redistribution edges, used by WS topology:", "0.1");
+            String strv = JOptionPane.showInputDialog("Select the probability"
+                    + " from 0 to 1 of redistribution edges, used by WS topology:", "0.1");
             if (strv != null) {
                 prob = Float.valueOf(strv);
             }
@@ -959,7 +958,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        IOFile.SaveTable(jT_GeneratedData);
+        IOFile.saveTableInFile(jT_GeneratedData);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
@@ -1039,14 +1038,14 @@ public class MainAGNWindow extends javax.swing.JFrame {
         try {
         R = IOFile.ReadMatrix(file.getAbsolutePath(), 0, 0, delimiter);
         //Vector rules = Network.MakeRulesFromResults(R);
-
+        
         //prepara lista de frequencias dos preditores.
         Vector ordenado = new Vector();
         StringBuffer list = Preprocessing.MakeResultList(R, ordenado);
         String nmlist = file.getName().substring(0, (int) file.getName().length() - 3) + "txt";
         String listoutfile = pastaimg + nmlist;
         IOFile.SaveFile(list.toString(), listoutfile);
-
+        
         //Vector re = Network.MakeGraphWithRules(rules, datatitles, spot_type, false, false);
         //JGraph graph = (JGraph) re.elementAt(0);
         String nmimg = file.getName().substring(0, (int) file.getName().length() - 3) + "png";
@@ -1056,7 +1055,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         ImageIO.write(img, "png", out);
         out.flush();
         out.close();
-
+        
         String htmloutfile = pastaimg + file.getName().substring(0, (int) file.getName().length() - 3) + "html";
         BufferedWriter bw = new BufferedWriter(new FileWriter(htmloutfile));
         bw.write("<HTML>\n<HEAD>");
@@ -1072,14 +1071,14 @@ public class MainAGNWindow extends javax.swing.JFrame {
         bw.write("<tr><td BGCOLOR='#FFFF66'></td><td>house-keeping</td></tr>\n");
         bw.write("<tr><td BGCOLOR='#33FF33'></td><td>prostate-marker</td></tr>\n");
         bw.write("</tbody></table>\n<br><p>&nbsp;<p>");
-
+        
         bw.write("<table border='1' width='100%' cellspacing='0' height='1'>\n");
         bw.write("<thead><tr><th colspan='5'><a href ='" + nmlist + "'><b>Predictor's List</b></a></th></tr></thead>\n");
         bw.write("<thead><tr><th>Index-Predictor</th><th>GeneID-Predictor</th><th>Signal</th><th>Entropy</th><th>Frequency</th></tr></thead>\n");
         //bw.write("<a href ='"+ nmlist +"'><b>Lista de Preditores</b></a><br><br>\n");
-
+        
         //IOFile.PrintMatrix(R);
-
+        
         /*
         //gera a imagem do preditor e dos sinais preditos na mesma imagem.
         DefaultCategoryDataset[] datasets1 = new DefaultCategoryDataset[maxg+1];
@@ -1100,7 +1099,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         datasets1[nrpreditos+1] = new DefaultCategoryDataset();
         datasets2[nrpreditos+1] = new DefaultCategoryDataset();
         int amostra = (Integer) preditos.get(nrpreditos);
-
+        
         Preprocessing.MaxMin(Mo[amostra], maxmin);
         for (int c = 0; c < columns; c++) {
         datasets1[nrpreditos+1].addValue(Md[amostra][c], "sample " + amostra, String.valueOf(c));
@@ -1118,7 +1117,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         Vector item = (Vector) ordenado.get(p);
         double[] linha = (double[]) item.get(0);
         Vector preditos = (Vector) item.get(1);
-
+        
         //gera a tabela de frequencias dos preditores.
         int preditor = (int) linha[0];
         float entropia = (float) linha[1];
@@ -1144,14 +1143,14 @@ public class MainAGNWindow extends javax.swing.JFrame {
         }
         datasets1[0] = new XYSeriesCollection(serie1);
         datasets2[0] = new XYSeriesCollection(serie2);
-
+        
         for (int nrpreditos = 0; nrpreditos < maxg; nrpreditos++) {
         int amostra = (Integer) preditos.get(nrpreditos);
         Preprocessing.MaxMin(Mo[amostra], maxmin);
-
+        
         serie1 = new XYSeries("sample " + amostra);
         serie2 = new XYSeries("sample " + amostra);
-
+        
         for (int c = 0; c < columns; c++) {
         serie1.add(c, Md[amostra][c]);
         valornormalizado = (qv - 1) * (Mo[amostra][c] - maxmin[1]) / (maxmin[0] - maxmin[1]);
@@ -1160,7 +1159,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         datasets1[nrpreditos + 1] = new XYSeriesCollection(serie1);
         datasets2[nrpreditos + 1] = new XYSeriesCollection(serie2);
         }
-
+        
         nmimg = "sinal-gene-preditor" + id + "-index-" + (int) preditor + ".png";
         JFreeChart chart = Chart.MultipleStepChartOverlayed(datasets1, datasets2, "Time-Series Expression", "Time", "Value",
         true, (qv - 1 + 0.03f), -0.03f, false);
@@ -1170,7 +1169,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         ImageIO.write(img, "png", out);
         out.flush();
         out.close();
-
+        
         bw.write("<tr><td><center>" + preditor + "</center></td>");
         bw.write("<td><center><a href='" + su + "' >" + id + "</center></td>");
         bw.write("<td><center><a href=" + nmimg + ">signal</a></center></td><td><center>" + entropia + "</center></td>");
@@ -1180,19 +1179,19 @@ public class MainAGNWindow extends javax.swing.JFrame {
         bw.write("<table border='1' width='100%' cellspacing='0' height='1'>\n");
         bw.write("<thead><tr><th>Index</th><th>GeneID</th><th>Signal</th><th>Description</th></tr></thead>\n");
         bw.write("<tbody>");
-
+        
         Vector nodes = (Vector) re.elementAt(1);
         for (int n = 0; n < nodes.size(); n++) {
         int sn = (Integer) nodes.get(n);
         String id = (String) datatitles.get(sn);
         //String su = "http://www.ncbi.nlm.nih.gov/sites/entrez?db=nucest&cmd=search&term=" + id;
         String su = "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&orig_db=gene&term=" + id;
-
+        
         bw.write("<tr><td><center>" + sn + "</center></td>\n");
-
+        
         bw.write("<td><center>");
         bw.write("<A HREF='" + su + "' >" + id + "</center></td>\n");
-
+        
         //gera a imagem do sinal de cada gene.
         XYDataset[] datasets1 = new XYDataset[1];
         XYDataset[] datasets2 = new XYDataset[1];
@@ -1219,11 +1218,11 @@ public class MainAGNWindow extends javax.swing.JFrame {
         out.close();
         bw.write("<td><center><a href=" + nmimg + ">signal</a></center></td>\n");
         bw.write("<td>" + (String) info.get(sn) + "</td></tr>\n");
-
+        
         /*
         Vector re = GenerateNetwork.MakeGraphWithRules(rules, datatitles, spot_type);
         Graph frame = (Graph) re.elementAt(0);
-
+        
         imgoutfile = pastaimg + "sinal-gene-"+id+"-index-"+sn+ ".png";
         out = new BufferedOutputStream(new FileOutputStream(imgoutfile));
         frame.graph;
@@ -1273,16 +1272,16 @@ public class MainAGNWindow extends javax.swing.JFrame {
         nm = "0" + nm;
         }
         nm += ".txt";
-
+        
         R1 = IOFile.ReadMatrix(file1 + nm, 0, 0, delimiter);
         R2 = IOFile.ReadMatrix(file2 + nm, 0, 0, delimiter);
-
+        
         Vector rules1 = Network.MakeRulesFromResults(R1);
         Vector rules2 = Network.MakeRulesFromResults(R2);
-
+        
         Vector re = Network.MakeGraphWithRules(rules1, rules2, spot_type, datatitles);
         Graph frame = (Graph) re.elementAt(0);
-
+        
         String imgoutfile = pastaimg + "comp_sffs_regulados_nregulados" + nm.subSequence(0, nm.length() - 3) + "png";
         OutputStream out = new BufferedOutputStream(new FileOutputStream(imgoutfile));
         JGraph graph1 = frame.graph;
@@ -1293,12 +1292,12 @@ public class MainAGNWindow extends javax.swing.JFrame {
         out.flush();
         out.close();
         frame.dispose();
-
+        
         } catch (IOException error) {
         throw new FSException("Error when reading input file. " + error, false);
         }
         }
-
+        
         /*
         File folder = new File(pasta);
         if (!folder.isDirectory())

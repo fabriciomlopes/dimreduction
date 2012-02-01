@@ -188,16 +188,16 @@ public class IOFile {
         }
     }
 
-    public static boolean SaveTable(JTable table) {
-        JFileChooser dialogo;
-        int opcao;
+    public static boolean saveTableInFile(JTable table) {
+        JFileChooser dialog;
+        int option;
         String pastainicial = System.getProperty("user.dir").toString();
-        dialogo = new JFileChooser(pastainicial);
-        opcao = dialogo.showSaveDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
+        dialog = new JFileChooser(pastainicial);
+        option = dialog.showSaveDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
             try {
                 BufferedWriter fw = new BufferedWriter(new FileWriter(
-                        dialogo.getSelectedFile().getAbsolutePath(), false));
+                        dialog.getSelectedFile().getAbsolutePath(), false));
                 for (int i = 0; i < table.getRowCount(); i++) {
                     if (i == 0) {
                         for (int j = 0; j < table.getColumnCount(); j++) {
@@ -206,12 +206,8 @@ public class IOFile {
                         fw.write("\n");
                     }
                     for (int j = 0; j < table.getColumnCount(); j++) {
-                        String cn = table.getColumnName(j);
                         Object valor = table.getValueAt(i, j);
                         fw.write(valor + ";");
-                        //if (j < table.getColumnCount() - 1) {
-                        //    fw.write(";");
-                        //}
                     }
                     if (i < table.getRowCount() - 1) {
                         fw.write("\n");
