@@ -208,7 +208,7 @@ public class FS implements Serializable {
         probtable = (Vector) Criteria.probtable.clone();
 
         System.out.print("Preditores escolhidos: ");
-        IOFile.PrintPredictors(I, cfvalue, targetindex);
+        IOFile.printPredictors(I, cfvalue, targetindex);
     }
     
     //encontra o valor minimo de entropia entre os conjuntos de tamanho i, i=1...maxfeatures.
@@ -249,7 +249,7 @@ public class FS implements Serializable {
         //keep current conditional probability table
         probtable = (Vector) Criteria.probtable.clone();
         System.out.print("Preditores escolhidos: ");
-        IOFile.PrintPredictors(I, cfvalue, targetindex);
+        IOFile.printPredictors(I, cfvalue, targetindex);
     }    
 
     //encontra o valor minimo de entropia entre os conjuntos de tamanho i, i=1...maxfeatures.
@@ -731,7 +731,7 @@ public class FS implements Serializable {
             I = (Vector) exestack.remove(0);
             expandedestack.add(I.clone());
             System.out.print("\nExpanded tied predictors: ");
-            IOFile.PrintPredictors(I, -1, targetindex);
+            IOFile.printPredictors(I, -1, targetindex);
             for (int f = 0; f < columns - 1; f++) {
                 // for each feature
                 if (recovered != null) {
@@ -890,7 +890,7 @@ public class FS implements Serializable {
                 //DEBUG
                 System.out.println("Preditores escolhidos com cardinalidade == " + I.size());
                 System.out.print("Preditores escolhidos: ");
-                IOFile.PrintPredictors(I, hMin, targetindex);
+                IOFile.printPredictors(I, hMin, targetindex);
                 //System.out.println("Entropia == " + hMin);
                 //FIM-DEBUG
                 System.out.println("Preditores empatados empilhados:");
@@ -903,7 +903,7 @@ public class FS implements Serializable {
                             && !ContainPredictorSet(expandedestack, predictorset)) {//a combinacao de preditores nao foi expandida.
                         //&& predictorset.size() <= 2) {//nao atingiu o limite na cardinalidade do conjunto de preditores.
                         exestack.add(predictorset);
-                        IOFile.PrintPredictors(predictorset, tiesentropy[I.size()], targetindex);
+                        IOFile.printPredictors(predictorset, tiesentropy[I.size()], targetindex);
                         contp++;
                     }
                 }
@@ -916,7 +916,7 @@ public class FS implements Serializable {
                                 && !ContainPredictorSet(expandedestack, IMPpredictorset)) {//a combinacao de preditores nao foi expandida.
                             //&& IMPpredictorset.size() <= 2) {//nao atingiu o limite na cardinalidade do conjunto de preditores.
                             exestack.add(IMPpredictorset);
-                            IOFile.PrintPredictors(IMPpredictorset, hMax[t], targetindex);
+                            IOFile.printPredictors(IMPpredictorset, hMax[t], targetindex);
                         }
                     }
                 }
@@ -928,7 +928,7 @@ public class FS implements Serializable {
                     break;
                 } else if (original != null && resnroots != null && I.size() == 1) {
                     //armazena o tamanho da pilha utilizada, apenas se ela for utilizada nas proximas iteracoes.
-                    IOFile.WriteStackSize(original, resnroots, exestack.size(), targetindex);
+                    IOFile.writeStackSize(original, resnroots, exestack.size(), targetindex);
                 }
             } else {
                 // if the entropy of the subspace with dimension "dim" is greater
@@ -940,14 +940,14 @@ public class FS implements Serializable {
         }
         System.out.println("Numero de conjuntos de preditores expandidos == "
                 + expandedestack.size());
-        IOFile.PrintVectorofPredictors(expandedestack, targetindex);
+        IOFile.printVectorofPredictors(expandedestack, targetindex);
 
         System.out.print("\nTarget index == " + targetindex + "\n");
         PrintOriginalPredictors(original, targetindex);
         System.out.print("\n");
         Minimal(maxfeatures, 0.05f, targetindex);//returns the feature set with minimal result.
         //if (pathimp != null) {
-        //    IOFile.WriteCP(pathimp, I, hGlobal, targetindex);
+        //    IOFile.writeCP(pathimp, I, hGlobal, targetindex);
         //}
 
         //verifica se o predictor escolhido esta ou nao no conjunto resposta.
@@ -960,7 +960,7 @@ public class FS implements Serializable {
             if (original.getGenes()[targetindex].getPredictors().size() > 0
                     && !original.getGenes()[targetindex].getPredictors().contains(predictorindex)) {
                 //o preditor eh um true positivo, eh verificado sua porta logica e o valor de entropia.
-                //IOFile.WriteIMP(original, pathimp, targetindex, predictorindex, hGlobal, 99);
+                //IOFile.writeIMP(original, pathimp, targetindex, predictorindex, hGlobal, 99);
                 int maxpi = -1;
                 float maxh = -1;
                 int maxibf = -1;
@@ -992,7 +992,7 @@ public class FS implements Serializable {
                     }
                     //escreve no arquivo apenas o valor maximo obtido por um dos preditores...
                     if (maxh > 0) {
-                        IOFile.WriteIMP(original, pathimp, targetindex, maxpi, maxh, maxibf);
+                        IOFile.writeIMP(original, pathimp, targetindex, maxpi, maxh, maxibf);
                     }
                 }
             }
@@ -1040,7 +1040,7 @@ public class FS implements Serializable {
             I = (Vector) exestack.remove(0);
             expandedestack.add(I.clone());
             System.out.print("\nExpanded tied predictors: ");
-            IOFile.PrintPredictors(I, -1, targetindex);
+            IOFile.printPredictors(I, -1, targetindex);
             for (int f = 0; f < columns - 1; f++) {
                 // for each feature
                 if (recovered != null) {
@@ -1199,7 +1199,7 @@ public class FS implements Serializable {
                 //DEBUG
                 System.out.println("Preditores escolhidos com cardinalidade == " + I.size());
                 System.out.print("Preditores escolhidos: ");
-                IOFile.PrintPredictors(I, hMin, targetindex);
+                IOFile.printPredictors(I, hMin, targetindex);
                 //System.out.println("Entropia == " + hMin);
                 //FIM-DEBUG
                 System.out.println("Preditores empatados empilhados:");
@@ -1212,7 +1212,7 @@ public class FS implements Serializable {
                             && !ContainPredictorSet(expandedestack, predictorset)) {//a combinacao de preditores nao foi expandida.
                         //&& predictorset.size() <= 2) {//nao atingiu o limite na cardinalidade do conjunto de preditores.
                         exestack.add(predictorset);
-                        IOFile.PrintPredictors(predictorset, tiesentropy[I.size()], targetindex);
+                        IOFile.printPredictors(predictorset, tiesentropy[I.size()], targetindex);
                         contp++;
                     }
                 }
@@ -1225,7 +1225,7 @@ public class FS implements Serializable {
                                 && !ContainPredictorSet(expandedestack, IMPpredictorset)) {//a combinacao de preditores nao foi expandida.
                             //&& IMPpredictorset.size() <= 2) {//nao atingiu o limite na cardinalidade do conjunto de preditores.
                             exestack.add(IMPpredictorset);
-                            IOFile.PrintPredictors(IMPpredictorset, hMax[t], targetindex);
+                            IOFile.printPredictors(IMPpredictorset, hMax[t], targetindex);
                         }
                     }
                 }
@@ -1237,7 +1237,7 @@ public class FS implements Serializable {
                     break;
                 } else if (goldstandard != null && resnroots != null && I.size() == 1) {
                     //armazena o tamanho da pilha utilizada, apenas se ela for utilizada nas proximas iteracoes.
-                    IOFile.WriteStackSize(goldstandard, resnroots, exestack.size(), targetindex);
+                    IOFile.writeStackSize(goldstandard, resnroots, exestack.size(), targetindex);
                 }
             } else {
                 // if the entropy of the subspace with dimension "dim" is greater
@@ -1249,14 +1249,14 @@ public class FS implements Serializable {
         }
         System.out.println("Numero de conjuntos de preditores expandidos == "
                 + expandedestack.size());
-        IOFile.PrintVectorofPredictors(expandedestack, targetindex);
+        IOFile.printVectorofPredictors(expandedestack, targetindex);
 
         System.out.print("\nTarget index == " + targetindex + "\n");
         PrintOriginalPredictors(goldstandard, targetindex);
         System.out.print("\n");
         Minimal_Gensips2011(maxfeatures, 0.05f, goldstandard, targetindex, weight);//returns the feature set with minimal result.
         //if (pathimp != null) {
-        //    IOFile.WriteCP(pathimp, I, hGlobal, targetindex);
+        //    IOFile.writeCP(pathimp, I, hGlobal, targetindex);
         //}
 
         //verifica se o predictor escolhido esta ou nao no conjunto resposta.
@@ -1269,7 +1269,7 @@ public class FS implements Serializable {
             if (goldstandard.getGenes()[targetindex].getPredictors().size() > 0
                     && !goldstandard.getGenes()[targetindex].getPredictors().contains(predictorindex)) {
                 //o preditor eh um true positivo, eh verificado sua porta logica e o valor de entropia.
-                //IOFile.WriteIMP(original, pathimp, targetindex, predictorindex, hGlobal, 99);
+                //IOFile.writeIMP(original, pathimp, targetindex, predictorindex, hGlobal, 99);
                 int maxpi = -1;
                 float maxh = -1;
                 int maxibf = -1;
@@ -1301,7 +1301,7 @@ public class FS implements Serializable {
                     }
                     //escreve no arquivo apenas o valor maximo obtido por um dos preditores...
                     if (maxh > 0) {
-                        IOFile.WriteIMP(goldstandard, pathimp, targetindex, maxpi, maxh, maxibf);
+                        IOFile.writeIMP(goldstandard, pathimp, targetindex, maxpi, maxh, maxibf);
                     }
                 }
             }

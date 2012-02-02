@@ -901,21 +901,21 @@ public class MainAGNWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        String path = IOFile.SaveFile();
+        String path = IOFile.saveFile();
         if (path != null) {
-            IOFile.WriteAGNtoFile(agn, path);
+            IOFile.writeAGNtoFile(agn, path);
         }
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        String path = IOFile.OpenAGNFile();
+        String path = IOFile.openAGNFile();
         if (path != null) {
             jTF_InputRules.setText(path);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jB_ReadData2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_ReadData2ActionPerformed
-        agn = IOFile.ReadAGNfromFile(jTF_InputRules.getText());
+        agn = IOFile.readAGNfromFile(jTF_InputRules.getText());
     }//GEN-LAST:event_jB_ReadData2ActionPerformed
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
@@ -951,9 +951,9 @@ public class MainAGNWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
-            IOFile.WriteAGNtoFile(recoverednetwork, path);
+            IOFile.writeAGNtoFile(recoverednetwork, path);
         }
     }//GEN-LAST:event_jButton27ActionPerformed
 
@@ -962,21 +962,21 @@ public class MainAGNWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputResultFile.setText(path);
         }
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputLabelsFile.setText(path);
         }
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputSpotType.setText(path);
         }
@@ -1016,9 +1016,9 @@ public class MainAGNWindow extends javax.swing.JFrame {
         Vector spot_type;
         Vector info;
         try {
-            datatitles = IOFile.ReadDataFirstCollum(pathlabels, 0, delimiter);
-            spot_type = IOFile.ReadDataFirstCollum(pathspottype, 0, delimiter);
-            info = IOFile.ReadDataLine(pathinfo);
+            datatitles = IOFile.readDataFirstCollum(pathlabels, 0, delimiter);
+            spot_type = IOFile.readDataFirstCollum(pathspottype, 0, delimiter);
+            info = IOFile.readDataLine(pathinfo);
         } catch (IOException error) {
             throw new FSException("Error when reading input file. " + error, false);
         }
@@ -1036,7 +1036,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         if (file.isFile() && !file.getName().substring(0, 5).equalsIgnoreCase("saida")) {
         float[][] R;
         try {
-        R = IOFile.ReadMatrix(file.getAbsolutePath(), 0, 0, delimiter);
+        R = IOFile.readMatrix(file.getAbsolutePath(), 0, 0, delimiter);
         //Vector rules = Network.MakeRulesFromResults(R);
         
         //prepara lista de frequencias dos preditores.
@@ -1044,7 +1044,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         StringBuffer list = Preprocessing.MakeResultList(R, ordenado);
         String nmlist = file.getName().substring(0, (int) file.getName().length() - 3) + "txt";
         String listoutfile = pastaimg + nmlist;
-        IOFile.SaveFile(list.toString(), listoutfile);
+        IOFile.saveFile(list.toString(), listoutfile);
         
         //Vector re = Network.MakeGraphWithRules(rules, datatitles, spot_type, false, false);
         //JGraph graph = (JGraph) re.elementAt(0);
@@ -1077,7 +1077,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         bw.write("<thead><tr><th>Index-Predictor</th><th>GeneID-Predictor</th><th>Signal</th><th>Entropy</th><th>Frequency</th></tr></thead>\n");
         //bw.write("<a href ='"+ nmlist +"'><b>Lista de Preditores</b></a><br><br>\n");
         
-        //IOFile.PrintMatrix(R);
+        //IOFile.printMatrix(R);
         
         /*
         //gera a imagem do preditor e dos sinais preditos na mesma imagem.
@@ -1273,8 +1273,8 @@ public class MainAGNWindow extends javax.swing.JFrame {
         }
         nm += ".txt";
         
-        R1 = IOFile.ReadMatrix(file1 + nm, 0, 0, delimiter);
-        R2 = IOFile.ReadMatrix(file2 + nm, 0, 0, delimiter);
+        R1 = IOFile.readMatrix(file1 + nm, 0, 0, delimiter);
+        R2 = IOFile.readMatrix(file2 + nm, 0, 0, delimiter);
         
         Vector rules1 = Network.MakeRulesFromResults(R1);
         Vector rules2 = Network.MakeRulesFromResults(R2);
@@ -1331,7 +1331,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputExpressionFile.setText(path);
         }
@@ -1385,14 +1385,14 @@ public class MainAGNWindow extends javax.swing.JFrame {
                 Mr[lin][col] = Md[indexsinal][col];
             }
         }
-        //IOFile.PrintMatrix(Mr);
+        //IOFile.printMatrix(Mr);
         float threshold_entropy = 0.5f;//Float.valueOf(jTF_ThresholdEntropy.getText());
         String type_entropy = "no_obs";//(String) jCB_EntropySE.getSelectedItem();
         float alpha = 1;//Float.valueOf(jTF_AlphaSE.getText());
         float q_entropy = 1;//Float.parseFloat(jTF_QEntropySE.getText());
         int search_alg = 0;
         //jTA_SelectedFeaturesSE.setText("");
-        String path = null;//IOFile.SaveFile();
+        String path = null;//IOFile.saveFile();
 
         StringBuffer txt = null;
 
@@ -1440,10 +1440,10 @@ public class MainAGNWindow extends javax.swing.JFrame {
         //inverte os tempos de expressao, de forma que os targets passem
         //a ser os preditores, i.e. os preditores passem a considerar o valor
         //do target no instante de tempo posterior.
-        //IOFile.PrintMatrix(Md);
+        //IOFile.printMatrix(Md);
         if (jCB_TargetsAsPredictors.isSelected()) {
             Md = Preprocessing.InvertColumns(Md);
-            //IOFile.PrintMatrix(Md);
+            //IOFile.printMatrix(Md);
         }
         /*
         try {
@@ -1460,7 +1460,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
         String pathgeneid = "D:/doutorado/dimreduction/dados-cancer-eduardo/geneid.txt";
         Vector geneid = null;
         try {
-            geneid = IOFile.ReadDataFirstCollum(pathgeneid, 0, delimiter);
+            geneid = IOFile.readDataFirstCollum(pathgeneid, 0, delimiter);
         } catch (IOException error) {
             throw new FSException("Error when reading input file. " + error, false);
         }
@@ -1472,8 +1472,8 @@ public class MainAGNWindow extends javax.swing.JFrame {
             if (file.isFile()) {
                 try {
                     String pathresult = file.getAbsolutePath() + "-geneid.txt";
-                    BufferedWriter bw = IOFile.OpenBufferedWriter(pathresult, false);
-                    BufferedReader br = IOFile.OpenBufferedReader(file.getAbsolutePath());
+                    BufferedWriter bw = IOFile.openBufferedWriter(pathresult, false);
+                    BufferedReader br = IOFile.openBufferedReader(file.getAbsolutePath());
                     while (br.ready()) {
                         StringTokenizer s = new StringTokenizer(br.readLine());
                         while (s.hasMoreTokens()) {
@@ -1526,7 +1526,7 @@ public class MainAGNWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jCB_EntropySEActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputTestSE.setText(path);
         }

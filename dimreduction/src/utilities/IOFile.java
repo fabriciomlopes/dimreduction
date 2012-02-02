@@ -46,15 +46,15 @@ public class IOFile {
 
     /* ROTINA PARA LOCALIZAR UM ARQUIVO NO DISCO E DEVOLVER SEU CAMINHO
     (PATH) ABSOLUTO. */
-    public static String OpenPath() {
-        JFileChooser dialogo;
-        int opcao;
-        String pastainicial = System.getProperty("user.dir").toString();
-        dialogo = new JFileChooser(pastainicial);
-        opcao = dialogo.showOpenDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
+    public static String openPath() {
+        JFileChooser dialog;
+        int option;
+        String initialFolder = System.getProperty("user.dir").toString();
+        dialog = new JFileChooser(initialFolder);
+        option = dialog.showOpenDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
             try {
-                return (dialogo.getSelectedFile().getAbsolutePath());
+                return (dialog.getSelectedFile().getAbsolutePath());
             } catch (Exception error) {
                 throw new FSException("Error when selecting file. " + error, false);
             }
@@ -63,34 +63,34 @@ public class IOFile {
         }
     }
 
-    public static String OpenAGNFile() {
-        JFileChooser dialogo;
-        int opcao;
-        String pastainicial = System.getProperty("user.dir").toString();
-        dialogo = new JFileChooser(pastainicial);
+    public static String openAGNFile() {
+        JFileChooser dialog;
+        int option;
+        String initialFolder = System.getProperty("user.dir").toString();
+        dialog = new JFileChooser(initialFolder);
         FileNameExtensionFilter agnFilter = new FileNameExtensionFilter("AGN Artificial Gene Network", "agn");
-        dialogo.addChoosableFileFilter(agnFilter);
-        dialogo.setFileFilter(agnFilter);
-        opcao = dialogo.showOpenDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
-            return (dialogo.getSelectedFile().getAbsolutePath());
+        dialog.addChoosableFileFilter(agnFilter);
+        dialog.setFileFilter(agnFilter);
+        option = dialog.showOpenDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            return (dialog.getSelectedFile().getAbsolutePath());
         } else {
             return (null);
         }
     }
 
-    public static boolean SaveFile(String texto) {
-        JFileChooser dialogo;
-        int opcao;
-        String pastainicial = System.getProperty("user.dir").toString();
+    public static boolean saveFile(String text) {
+        JFileChooser dialog;
+        int option;
+        String initialFolder = System.getProperty("user.dir").toString();
 
-        dialogo = new JFileChooser(pastainicial);
-        opcao = dialogo.showSaveDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
+        dialog = new JFileChooser(initialFolder);
+        option = dialog.showSaveDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
             try {
                 BufferedWriter fw = new BufferedWriter(new FileWriter(
-                        dialogo.getSelectedFile().getAbsolutePath(), true));
-                fw.write(texto);
+                        dialog.getSelectedFile().getAbsolutePath(), true));
+                fw.write(text);
                 fw.flush();
                 fw.close();
                 return (true);
@@ -101,10 +101,10 @@ public class IOFile {
         return (false);
     }
 
-    public static boolean SaveFile(String texto, String path) {
+    public static boolean saveFile(String text, String path) {
         try {
             BufferedWriter fw = new BufferedWriter(new FileWriter(path, false));
-            fw.write(texto);
+            fw.write(text);
             fw.flush();
             fw.close();
             return true;
@@ -113,14 +113,14 @@ public class IOFile {
         }
     }
 
-    public static String SaveFile() {
-        JFileChooser dialogo;
-        int opcao;
-        String pastainicial = System.getProperty("user.dir").toString();
-        dialogo = new JFileChooser(pastainicial);
-        opcao = dialogo.showSaveDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
-            return (dialogo.getSelectedFile().getAbsolutePath());
+    public static String saveFile() {
+        JFileChooser dialog;
+        int option;
+        String initialFolder = System.getProperty("user.dir").toString();
+        dialog = new JFileChooser(initialFolder);
+        option = dialog.showSaveDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            return (dialog.getSelectedFile().getAbsolutePath());
         } else {
             return (null);
         }
@@ -129,60 +129,60 @@ public class IOFile {
     /*
      * Get the extension of a file.
      */
-    public static String getExtension(String filename) {
+    public static String getExtension(String fileName) {
         String ext = null;
-        int i = filename.lastIndexOf('.');
-        if (i > 0 && i < filename.length() - 1) {
-            ext = filename.substring(i + 1).toLowerCase();
+        int i = fileName.lastIndexOf('.');
+        if (i > 0 && i < fileName.length() - 1) {
+            ext = fileName.substring(i + 1).toLowerCase();
         }
         return ext;
     }
 
-    public static String SaveAGNFile() {
-        JFileChooser dialogo;
-        int opcao;
-        String pastainicial = System.getProperty("user.dir").toString();
-        dialogo = new JFileChooser(pastainicial);
+    public static String saveAGNFile() {
+        JFileChooser dialog;
+        int option;
+        String initialFolder = System.getProperty("user.dir").toString();
+        dialog = new JFileChooser(initialFolder);
         FileNameExtensionFilter agnFilter = new FileNameExtensionFilter("AGN Artificial Gene Network", "agn");
-        dialogo.addChoosableFileFilter(agnFilter);
-        dialogo.setFileFilter(agnFilter);
-        opcao = dialogo.showSaveDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
-            String filename = dialogo.getSelectedFile().getAbsolutePath();
-            String ext = getExtension(filename);
+        dialog.addChoosableFileFilter(agnFilter);
+        dialog.setFileFilter(agnFilter);
+        option = dialog.showSaveDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            String fileName = dialog.getSelectedFile().getAbsolutePath();
+            String ext = getExtension(fileName);
             if (ext == null) {
-                FileNameExtensionFilter filter = (FileNameExtensionFilter) dialogo.getFileFilter();
-                filename = filename + "." + filter.getExtensions()[0];
+                FileNameExtensionFilter filter = (FileNameExtensionFilter) dialog.getFileFilter();
+                fileName = fileName + "." + filter.getExtensions()[0];
             }
-            return (filename);
+            return (fileName);
         } else {
             return (null);
         }
     }
 
     public static String SaveIMGFile() {
-        JFileChooser dialogo;
-        int opcao;
-        String pastainicial = System.getProperty("user.dir").toString();
-        dialogo = new JFileChooser(pastainicial);
+        JFileChooser dialog;
+        int option;
+        String initialFolder = System.getProperty("user.dir").toString();
+        dialog = new JFileChooser(initialFolder);
         FileNameExtensionFilter jpgFilter = new FileNameExtensionFilter("JPEG Compressed Image Files", "jpg");
         FileNameExtensionFilter pngFilter = new FileNameExtensionFilter("PNG Portable Network Graphics", "png");
         FileNameExtensionFilter gifFilter = new FileNameExtensionFilter("GIF Graphics Interchange Format", "gif");
         FileNameExtensionFilter bmpFilter = new FileNameExtensionFilter("BMP file format", "bmp");
-        dialogo.addChoosableFileFilter(pngFilter);
-        dialogo.addChoosableFileFilter(jpgFilter);
-        dialogo.addChoosableFileFilter(gifFilter);
-        dialogo.addChoosableFileFilter(bmpFilter);
-        dialogo.setFileFilter(pngFilter);
-        opcao = dialogo.showSaveDialog(null);
-        if (opcao == JFileChooser.APPROVE_OPTION) {
-            String filename = dialogo.getSelectedFile().getAbsolutePath();
-            String ext = getExtension(filename);
+        dialog.addChoosableFileFilter(pngFilter);
+        dialog.addChoosableFileFilter(jpgFilter);
+        dialog.addChoosableFileFilter(gifFilter);
+        dialog.addChoosableFileFilter(bmpFilter);
+        dialog.setFileFilter(pngFilter);
+        option = dialog.showSaveDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            String fileName = dialog.getSelectedFile().getAbsolutePath();
+            String ext = getExtension(fileName);
             if (ext == null) {
-                FileNameExtensionFilter filter = (FileNameExtensionFilter) dialogo.getFileFilter();
-                filename = filename + "." + filter.getExtensions()[0];
+                FileNameExtensionFilter filter = (FileNameExtensionFilter) dialog.getFileFilter();
+                fileName = fileName + "." + filter.getExtensions()[0];
             }
-            return (filename);
+            return (fileName);
         } else {
             return (null);
         }
@@ -191,8 +191,8 @@ public class IOFile {
     public static boolean saveTableInFile(JTable table) {
         JFileChooser dialog;
         int option;
-        String pastainicial = System.getProperty("user.dir").toString();
-        dialog = new JFileChooser(pastainicial);
+        String initialFolder = System.getProperty("user.dir").toString();
+        dialog = new JFileChooser(initialFolder);
         option = dialog.showSaveDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
             try {
@@ -206,8 +206,8 @@ public class IOFile {
                         fw.write("\n");
                     }
                     for (int j = 0; j < table.getColumnCount(); j++) {
-                        Object valor = table.getValueAt(i, j);
-                        fw.write(valor + ";");
+                        Object value = table.getValueAt(i, j);
+                        fw.write(value + ";");
                     }
                     if (i < table.getRowCount() - 1) {
                         fw.write("\n");
@@ -223,7 +223,7 @@ public class IOFile {
         return (false);
     }
 
-    public static BufferedReader OpenBufferedReader(String path) {
+    public static BufferedReader openBufferedReader(String path) {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(path));
@@ -233,7 +233,7 @@ public class IOFile {
         return (br);
     }
 
-    public static BufferedWriter OpenBufferedWriter(String path, boolean append) {
+    public static BufferedWriter openBufferedWriter(String path, boolean append) {
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new FileWriter(path, append));
@@ -245,11 +245,11 @@ public class IOFile {
 // receives a file name and returns a matrix of double values
 
     @SuppressWarnings("empty-statement")
-    public static float[][] ReadMatrix(String arch_name, int startrow,
+    public static float[][] readMatrix(String fileName, int startrow,
             int startcolumn, String delimiter)
             throws IOException, NumberFormatException {
         // obtaining the number of lines and collumns of the matrix
-        BufferedReader fp = OpenBufferedReader(arch_name);
+        BufferedReader fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -261,7 +261,7 @@ public class IOFile {
         }
         // reading the matrix
         float[][] A = new float[lines - startrow][collumns - startcolumn];
-        fp = OpenBufferedReader(arch_name);
+        fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -288,9 +288,9 @@ public class IOFile {
 // memory space economy)
 
     @SuppressWarnings("empty-statement")
-    public static char[][] ReadMatrix(String arch_name, String delimiter)
+    public static char[][] readMatrix(String fileName, String delimiter)
             throws IOException {
-        BufferedReader fp = OpenBufferedReader(arch_name);
+        BufferedReader fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -302,7 +302,7 @@ public class IOFile {
             ;
         }
         char[][] A = new char[lines][collumns];
-        fp = OpenBufferedReader(arch_name);
+        fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -318,10 +318,40 @@ public class IOFile {
         return A;
     }
 
-    public static Vector ReadDataFirstCollum(String arch_name, int startrow,
+    @SuppressWarnings("empty-statement")
+    public static String[][] changeFileInArrayString(String fileName, String delimiter)
+            throws IOException {
+        BufferedReader fp = IOFile.openBufferedReader(fileName);
+        if (fp == null) {
+            return (null);
+        }
+        // obtaining the number of lines and columns of the matrix
+        StringTokenizer s = new StringTokenizer(fp.readLine(), delimiter);
+        int collumns = s.countTokens();
+        int lines;
+        for (lines = 1; fp.readLine() != null; lines++) {
+            ;
+        }
+        String[][] A = new String[lines][collumns];
+        fp = IOFile.openBufferedReader(fileName);
+        if (fp == null) {
+            return (null);
+        }
+        // reading the matrix
+        for (int i = 0; i < lines; i++) {
+            s = new StringTokenizer(fp.readLine(), delimiter);
+            for (int j = 0; s.hasMoreTokens(); A[i][j++] = s.nextToken(delimiter)) {
+                ;
+            }
+        }
+        fp.close();
+        return A;
+    }
+    
+    public static Vector readDataFirstCollum(String fileName, int startrow,
             String delimiter)
             throws IOException {
-        BufferedReader fp = OpenBufferedReader(arch_name);
+        BufferedReader fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -346,10 +376,10 @@ public class IOFile {
      * METODO ABAIXO PARA LER CLASSE (PRIMEIRA COLUNA) E NOME DO GENE (SEGUNDA COLUNA)
      * DE UM ARQUIVO ASCII.
      */
-    public static Vector[] ReadDataCollumns2(String arch_name, int startrow,
+    public static Vector[] readDataCollumns2(String fileName, int startrow,
             Vector collumns, String delimiter) {
         try {
-            BufferedReader fp = OpenBufferedReader(arch_name);
+            BufferedReader fp = openBufferedReader(fileName);
             if (fp == null) {
                 return (null);
             }
@@ -365,7 +395,7 @@ public class IOFile {
                 vetout[i] = new Vector();
             }
 
-            fp = OpenBufferedReader(arch_name);
+            fp = openBufferedReader(fileName);
             StringTokenizer s;
             if (fp.ready()) {
                 for (int l = 0; l < startrow; l++) {
@@ -401,21 +431,21 @@ public class IOFile {
         }
     }
 
-    public static Vector[] ReadDataCollumns(String arch_name, int startrow,
-            Vector collumns, String delimiter) {
-        BufferedReader fp = OpenBufferedReader(arch_name);
+    public static Vector[] readDataCollumns(String fileName, int startRow,
+            Vector columns, String delimiter) {
+        BufferedReader fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
-        Vector[] vetout = new Vector[collumns.size()];
-        for (int i = 0; i < collumns.size(); i++) {
+        Vector[] vetout = new Vector[columns.size()];
+        for (int i = 0; i < columns.size(); i++) {
             vetout[i] = new Vector();
         }
 
         try {
             StringTokenizer s;
             if (fp.ready()) {
-                for (int l = 0; l < startrow; l++) {
+                for (int l = 0; l < startRow; l++) {
                     s = new StringTokenizer(fp.readLine(), delimiter);//desconsidera linha
                 }
             }
@@ -424,7 +454,7 @@ public class IOFile {
                 int pos = 0;
                 int col = 0;
                 while (s.hasMoreTokens()) {
-                    if (collumns.contains(col)) {
+                    if (columns.contains(col)) {
                         vetout[pos++].add(s.nextToken());//token of the collumn
                     } else {
                         s.nextToken();//token of the collumn
@@ -440,9 +470,9 @@ public class IOFile {
         }
     }
 
-    public static Vector ReadDataFirstRow(String arch_name, int startrow,
+    public static Vector readDataFirstRow(String fileName, int startrow,
             int startcolumn, String delimiter) throws IOException {
-        BufferedReader fp = OpenBufferedReader(arch_name);
+        BufferedReader fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -465,9 +495,9 @@ public class IOFile {
         return vetout;
     }
 
-    public static Vector ReadDataLine(String arch_name)
+    public static Vector readDataLine(String fileName)
             throws IOException {
-        BufferedReader fp = OpenBufferedReader(arch_name);
+        BufferedReader fp = openBufferedReader(fileName);
         if (fp == null) {
             return (null);
         }
@@ -480,7 +510,7 @@ public class IOFile {
         return out;
     }
 
-    public static AGN ReadAGNfromFile(String path) {
+    public static AGN readAGNfromFile(String path) {
         File arquivo = null;
         FileInputStream fluxoentrada = null;
         ObjectInputStream obj = null;
@@ -506,7 +536,7 @@ public class IOFile {
         return network;
     }
 
-    public static boolean WriteAGNtoFile(AGN network, String path) {
+    public static boolean writeAGNtoFile(AGN network, String path) {
         File arquivo = null;
         FileOutputStream fluxosaida = null;
         ObjectOutputStream obj = null;
@@ -528,8 +558,7 @@ public class IOFile {
 
     /*Constructs a string tokenizer for each matrix row. The character
     in the delimiter argument are the delimiters for separating tokens.*/
-    public static void WriteMatrix(String path, float[][] M,
-            String delimiter) {
+    public static void writeMatrix(String path, float[][] M, String delimiter) {
         try {
             out = new FileWriter(new File(path), false);
             for (int i = 0; i < M.length; i++) {
@@ -549,8 +578,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteMatrix(String path, int[][] M,
-            String delimiter) {
+    public static void writeMatrix(String path, int[][] M, String delimiter) {
         try {
             out = new FileWriter(new File(path), false);
             for (int i = 0; i < M.length; i++) {
@@ -570,7 +598,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteFile(String path, double[][] M) {
+    public static void writeFile(String path, double[][] M) {
         try {
             out = new FileWriter(new File(path), false);
             for (int i = 0; i < M.length; i++) {
@@ -586,7 +614,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteFile(String path, int[] M) {
+    public static void writeFile(String path, int[] M) {
         try {
             out = new FileWriter(new File(path), false);
             for (int i = 0; i < M.length; i++) {
@@ -600,7 +628,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteFile(String path, Vector vet, boolean append) {
+    public static void writeFile(String path, Vector vet, boolean append) {
         try {
             out = new FileWriter(new File(path), append);
             for (int i = 0; i < vet.size(); i++) {
@@ -613,7 +641,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteTwoColumnsFile(String path, Vector col1, Vector col2, boolean append) {
+    public static void writeTwoColumnsFile(String path, Vector col1, Vector col2, boolean append) {
         try {
             out = new FileWriter(new File(path), append);
             for (int i = 0; i < col1.size(); i++) {
@@ -626,7 +654,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteIndividualResults(
+    public static void writeIndividualResults(
             AGN originalagn,
             Vector originalpredictors,
             Vector inferredpredictors,
@@ -678,7 +706,7 @@ public class IOFile {
         //outline.append(Math.sqrt(PPV * Sensitivity) + ";");
     }
 
-    public static void IndividualResults(
+    public static void individualResults(
             AGN originalagn,
             Vector originalpredictors,
             Vector ties,
@@ -687,7 +715,7 @@ public class IOFile {
         for (int tp = 0; tp < ties.size(); tp++) {
             //para cada conj de predictores empatados sao gerados os resultados abaixo.
             Vector inferredpredictors = (Vector) ties.get(tp);
-            WriteIndividualResults(
+            writeIndividualResults(
                     originalagn,
                     originalpredictors,
                     inferredpredictors,
@@ -695,7 +723,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteCP(String path, Vector predictors, float cfv, int targetindex) {
+    public static void writeCP(String path, Vector predictors, float cfv, int targetindex) {
         try {
             out = new FileWriter(new File(path), true);
             StringBuilder outline = new StringBuilder();
@@ -718,7 +746,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteStackSize(AGN original, String path, int size, int targetindex) {
+    public static void writeStackSize(AGN original, String path, int size, int targetindex) {
         try {
             out = new FileWriter(new File(path), true);
             StringBuilder outline = new StringBuilder();
@@ -743,7 +771,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteIMP(AGN original, String path, int targetindex, int predictorindex, float cfvalue, int booleanfunction) {
+    public static void writeIMP(AGN original, String path, int targetindex, int predictorindex, float cfvalue, int booleanfunction) {
         try {
             out = new FileWriter(new File(path), true);
             StringBuilder outline = new StringBuilder();
@@ -774,7 +802,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteTies(
+    public static void writeTies(
             AGN originalagn,
             String path,
             int target,
@@ -867,12 +895,12 @@ public class IOFile {
                 if (ties != null && ties.size() > 1) {
                     outline.append("1;");//ties?
                     outline.append(ties.size() + ";");//#ties
-                    WriteIndividualResults(
+                    writeIndividualResults(
                             originalagn,
                             originalpredictors,
                             inferredpredictors,
                             outline);
-                    IndividualResults(
+                    individualResults(
                             originalagn,
                             originalpredictors,
                             ties,
@@ -880,7 +908,7 @@ public class IOFile {
                 } else if (inferredpredictors != null) {
                     outline.append("0;");//ties?
                     outline.append("0;");//#ties
-                    WriteIndividualResults(
+                    writeIndividualResults(
                             originalagn,
                             originalpredictors,
                             inferredpredictors,
@@ -907,7 +935,7 @@ public class IOFile {
         }
     }
 
-    public static void WriteFile(String path, int ini, int searchmethod, int nr_nodes,
+    public static void writeFile(String path, int ini, int searchmethod, int nr_nodes,
             int avg_edges, int nr_obs, int quantization, float[] CM, int concat,
             float q_tsallis, boolean append) {
         try {
@@ -1146,10 +1174,9 @@ public class IOFile {
         } catch (IOException error) {
             throw new FSException("Error when save net comparisons file. " + error, false);
         }
-
     }
 
-    public static synchronized void WriteFile(BufferedWriter out, int target, Vector predictors, double entropy) {
+    public static synchronized void writeFile(BufferedWriter out, int target, Vector predictors, double entropy) {
         if (out != null) {
             try {
                 //BufferedWriter out = new BufferedWriter(new FileWriter(path, true));
@@ -1170,7 +1197,7 @@ public class IOFile {
     }
 
     //prints the content of a matrix
-    public static void PrintMatrix(char[][] M) {
+    public static void printMatrix(char[][] M) {
         int lines = M.length;
         int collumns = M[0].length;
         for (int i = 0; i
@@ -1185,7 +1212,7 @@ public class IOFile {
         System.out.println();
     }
 
-    public static void PrintMatrix(int[][] M) {
+    public static void printMatrix(int[][] M) {
         int lines = M.length;
         int collumns = M[0].length;
         for (int i = 0; i < lines; i++) {
@@ -1199,7 +1226,7 @@ public class IOFile {
     }
 
     //prints the content of a matrix
-    public static void PrintMatrix(float[][] M) {
+    public static void printMatrix(float[][] M) {
         int lines = M.length;
         int collumns = M[0].length;
         for (int i = 0; i
@@ -1215,7 +1242,7 @@ public class IOFile {
     }
 
     //prints the content of an array
-    public static void PrintArray(float[] M) {
+    public static void printArray(float[] M) {
         int rows = M.length;
         for (int i = 0; i < rows; i++) {
             System.out.print(M[i] + " ");
@@ -1224,7 +1251,7 @@ public class IOFile {
     }
 
     //prints the content of an array
-    public static void PrintArray(int[] M) {
+    public static void printArray(int[] M) {
         int rows = M.length;
         for (int i = 0; i < rows; i++) {
             System.out.print(M[i] + " ");
@@ -1232,7 +1259,7 @@ public class IOFile {
         System.out.println();
     }
 
-    public static void PrintMatrix(int[][] Mo, int[][] Mr) {
+    public static void printMatrix(int[][] Mo, int[][] Mr) {
         int lines = Mo.length;
         int collumns = Mo[0].length;
         for (int i = 0; i < lines; i++) {
@@ -1248,7 +1275,7 @@ public class IOFile {
         System.out.println();
     }
 
-    public static void MakeHeaderStatistics(String output) {
+    public static void makeHeaderStatistics(String output) {
         try {
             BufferedWriter fw = new BufferedWriter(new FileWriter(output, false));
             StringBuffer out = new StringBuffer();
@@ -1302,7 +1329,7 @@ public class IOFile {
 
     }
 
-    public static void CloseBufferedWriter(BufferedWriter out) {
+    public static void closeBufferedWriter(BufferedWriter out) {
         if (out != null) {
             try {
                 out.close();
@@ -1312,13 +1339,13 @@ public class IOFile {
         }
     }
 
-    public static void PrintVectorofPredictors(Vector<Vector> vpredictors, int targetindex) {
+    public static void printVectorofPredictors(Vector<Vector> vpredictors, int targetindex) {
         for (int i = 0; i < vpredictors.size(); i++) {
-            PrintPredictors(vpredictors.get(i), -1, targetindex);
+            printPredictors(vpredictors.get(i), -1, targetindex);
         }
     }
 
-    public static void PrintPredictors(Vector predictors, float cfv, int targetindex) {
+    public static void printPredictors(Vector predictors, float cfv, int targetindex) {
         System.out.print("( ");
         for (int i = 0; i < predictors.size(); i++) {
             int predictorindex = (Integer) predictors.get(i);
@@ -1332,28 +1359,5 @@ public class IOFile {
         } else {
             System.out.print(")\n");
         }
-    }
-
-    public static void saveDreamResults(AGN network, String path) throws IOException {
-        BufferedWriter bw = IOFile.OpenBufferedWriter(path, false);
-        for (int i = 0; i < network.getNrgenes(); i++) {
-            //Vector targets = network.getGenes()[i].getTargets();
-            Vector predictors = network.getGenes()[i].getPredictors();
-            for (int t = 0; t < network.getNrgenes(); t++) {
-                if (i != t) {//nao considera auto-relacionamentos.
-                    StringBuffer str = new StringBuffer();
-                    str.append(network.getGenes()[t].getName() + "\t " + network.getGenes()[i].getName() + "\t ");
-                    if (predictors.contains(t)) {
-                        str.append("1");
-                    } else {
-                        str.append("0");
-                    }
-                    str.append("\n");
-                    bw.write(str.toString());
-                }
-            }
-        }
-        bw.flush();
-        bw.close();
     }
 }

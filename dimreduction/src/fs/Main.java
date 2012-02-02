@@ -82,15 +82,15 @@ public class Main {
                 int maxfeatures = 5;
                 int resultsetsize = 1;
 
-                featurestitles = IOFile.ReadDataFirstRow(inpath, 0, 1, delimiter);
+                featurestitles = IOFile.readDataFirstRow(inpath, 0, 1, delimiter);
                 int startrow = 1;
                 Vector collumns = new Vector(2);
                 collumns.add(0);
                 collumns.add(1);
-                Vector[] geneids = IOFile.ReadDataCollumns(inpath, 1, collumns, delimiter);
-                //genenames = IOFile.ReadDataFirstCollum(inpath, startrow, delimiter);
+                Vector[] geneids = IOFile.readDataCollumns(inpath, 1, collumns, delimiter);
+                //genenames = IOFile.readDataFirstCollum(inpath, startrow, delimiter);
                 int startcolumn = 2;
-                float[][] expressiondata = IOFile.ReadMatrix(inpath, startrow, startcolumn, delimiter);
+                float[][] expressiondata = IOFile.readMatrix(inpath, startrow, startcolumn, delimiter);
 
                 int nrgenes = expressiondata.length;
                 int signalsize = expressiondata[0].length;
@@ -113,7 +113,7 @@ public class Main {
                         std,
                         lowthreshold,
                         hithreshold);
-                IOFile.WriteMatrix(outpath + "quantized-data.txt", quantizeddata, ";");
+                IOFile.writeMatrix(outpath + "quantized-data.txt", quantizeddata, ";");
 
                 AGN recoverednetwork = new AGN(nrgenes, signalsize, 2, datatype);
                 recoverednetwork.setMean(mean);
@@ -147,7 +147,7 @@ public class Main {
                         3//stacksize, used only for SFFS_Stack (option 4) == tamanho da expansao dos empatados.
                         );
                 //armazenamento dos resultados
-                IOFile.WriteAGNtoFile(recoverednetwork, outpath + "rede-completa.agn");
+                IOFile.writeAGNtoFile(recoverednetwork, outpath + "rede-completa.agn");
             } else {
                 //execution with graphical interface...
                 java.awt.EventQueue.invokeLater(new Runnable() {

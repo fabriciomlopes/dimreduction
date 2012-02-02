@@ -298,14 +298,14 @@ public class BuildHTML {
     public static void main(String[] args) throws IOException {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("-v")) {
-                AGN agnnew = IOFile.ReadAGNfromFile(args[1]);
+                AGN agnnew = IOFile.readAGNfromFile(args[1]);
                 BuildFiles(agnnew, args[2],null);
                 /*
-                AGN agn = IOFile.ReadAGNfromFile("D:/doutorado/Marie-Anne/www/resultados-redes-frio/agn-razoes-frio-normal-root.agn");
+                AGN agn = IOFile.readAGNfromFile("D:/doutorado/Marie-Anne/www/resultados-redes-frio/agn-razoes-frio-normal-root.agn");
                 AGN agnnew = new AGN(agn.getNrgenes(), agn.getSignalsize(), agn.getQuantization());
                 agnnew.setTemporalsignalq(agn.getTemporalsignal());
                 agnnew.setLabelstemporalsignal(agn.getLabelstemporalsignal());
-                float[][] Mo = IOFile.ReadMatrix("D:/doutorado/Marie-Anne/www/resultados-redes-frio/dados-razoes-frio-normal-root.csv",
+                float[][] Mo = IOFile.readMatrix("D:/doutorado/Marie-Anne/www/resultados-redes-frio/dados-razoes-frio-normal-root.csv",
                 1,
                 2,
                 MainAGNWindow.delimiter);
@@ -384,10 +384,10 @@ public class BuildHTML {
                 //MainWindow.Md = agn.getTemporalsignal();
                 //MainWindow.featurestitles = agn.getLabelstemporalsignal();
                 //float [][] teste = agn.getTemporalsignal();
-                float[][] expressiondata = IOFile.ReadMatrix("D:/doutorado/Marie-Anne/www/resultados-redes-frio/dados-razoes-frio-normal-root.csv", 1, 2, MainMarieAnne.delimiter);
-                IOFile.PrintMatrix(expressiondata);
+                float[][] expressiondata = IOFile.readMatrix("D:/doutorado/Marie-Anne/www/resultados-redes-frio/dados-razoes-frio-normal-root.csv", 1, 2, MainMarieAnne.delimiter);
+                IOFile.printMatrix(expressiondata);
                 Preprocessing.quantizecolumns(expressiondata, 3, true, 0);
-                IOFile.PrintMatrix(expressiondata);
+                IOFile.printMatrix(expressiondata);
 
                 for (int i = 0; i < agnnew.getNrgenes(); i++) {
                 Gene genenew = agnnew.getGenes()[i];
