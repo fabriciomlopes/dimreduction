@@ -863,25 +863,25 @@ public class AGNRoutines {
         for (int ig = 0; ig < targets.size(); ig++) {
             //algoritmo para montar os conjuntos de treinamento assumindo que
             // os periodos de tempo sao continuos/periodicos.
-            //IOFile.PrintMatrix(M);
+            //IOFile.printMatrix(M);
             int targetindex = (Integer) targets.get(ig);
             Vector predictors = new Vector();
             Vector ties = new Vector();
-            //IOFile.PrintMatrix(recoveredagn.getTemporalsignalquantized());
+            //IOFile.printMatrix(recoveredagn.getTemporalsignalquantized());
             char[][] strainingset;
             if (datatype == 1) {
                 strainingset = MakeTemporalTrainingSet(recoveredagn.getTemporalsignalquantized(), targetindex, isPeriodic);
             } else {
                 strainingset = MakeSteadyStateTrainingSet(recoveredagn.getTemporalsignalquantized(), targetindex);
             }
-            //IOFile.PrintMatrix(strainingset);
+            //IOFile.printMatrix(strainingset);
             /* SELETOR DE CARACTERISTICAS PARA O TREINAMENTO. */
             FS fs = new FS(strainingset, recoveredagn.getQuantization(),
                     recoveredagn.getQuantization(),
                     type_entropy, alpha, beta, q_entropy, resultsetsize);
             if (CNMeasurements.hasVariation(strainingset)) {
                 countvar++;
-                //IOFile.PrintMatrix(strainingset);
+                //IOFile.printMatrix(strainingset);
                 //System.out.println("\nTarget = " + gt);
                 /*
                 n: number of possible values for features
@@ -1015,7 +1015,7 @@ public class AGNRoutines {
                     topology = originalagn.getTopology();
                 }
                 //tratamento dos resultados com empates.
-                IOFile.WriteTies(
+                IOFile.writeTies(
                         originalagn,
                         tiesout,
                         targetindex,
@@ -1176,7 +1176,7 @@ public class AGNRoutines {
         for (int i = 0; i < 9; i++) {
             collumns.add(i);
         }
-        Vector[] geneinformations = IOFile.ReadDataCollumns(pathinputfile, 1, collumns, "\t");
+        Vector[] geneinformations = IOFile.readDataCollumns(pathinputfile, 1, collumns, "\t");
 
         //debug
         //for (int i = 0; i < geneinformations.length; i++) {
@@ -1281,7 +1281,7 @@ public class AGNRoutines {
         int synonymscount = 0;
         int genecount = 0;
         Gene gene = null;
-        BufferedReader br = IOFile.OpenBufferedReader(pathinputfile);
+        BufferedReader br = IOFile.openBufferedReader(pathinputfile);
         while (br.ready()) {
             StringTokenizer s = new StringTokenizer(br.readLine(), delimiter);
             if (s.countTokens() > 0) {
@@ -1440,7 +1440,7 @@ public class AGNRoutines {
     public static String FindPathwayDescription(String pathwaydescription, String pathway) throws IOException {
         String delimiter = String.valueOf(' ') + String.valueOf(',') + String.valueOf('=') + String.valueOf('.') + String.valueOf(')') + String.valueOf('(') + String.valueOf('\t') + String.valueOf('\n') + String.valueOf('\r') + String.valueOf('\f') + String.valueOf(';');
         String res = null;
-        BufferedReader br = IOFile.OpenBufferedReader(pathwaydescription);
+        BufferedReader br = IOFile.openBufferedReader(pathwaydescription);
         boolean found = false;
         while (br.ready() && !found) {
             StringTokenizer s = new StringTokenizer(br.readLine(), delimiter);
@@ -1463,7 +1463,7 @@ public class AGNRoutines {
             String pathwaydescription) throws IOException {
         String delimiter = String.valueOf(' ') + String.valueOf(',') + String.valueOf('=') + String.valueOf('.') + String.valueOf(')') + String.valueOf('(') + String.valueOf('\t') + String.valueOf('\n') + String.valueOf('\r') + String.valueOf('\f') + String.valueOf(';');
         Gene gene = null;
-        BufferedReader br = IOFile.OpenBufferedReader(pathwaydata);
+        BufferedReader br = IOFile.openBufferedReader(pathwaydata);
         while (br.ready()) {
             StringTokenizer s = new StringTokenizer(br.readLine(), delimiter);
             if (s.countTokens() > 0) {
@@ -1834,7 +1834,7 @@ public class AGNRoutines {
     }
 
     public static void setGeneRelationshipsfromDream(AGN network, File goldstandard) throws IOException {
-        BufferedReader br = IOFile.OpenBufferedReader(goldstandard.getAbsolutePath());
+        BufferedReader br = IOFile.openBufferedReader(goldstandard.getAbsolutePath());
         while (br.ready()) {
             StringTokenizer s = new StringTokenizer(br.readLine());
             String predictorname = s.nextToken();
@@ -1862,7 +1862,7 @@ public class AGNRoutines {
     }
 
     public static void setGeneRelationshipsfromProtein(AGN network, File goldstandard) throws IOException {
-        BufferedReader br = IOFile.OpenBufferedReader(goldstandard.getAbsolutePath());
+        BufferedReader br = IOFile.openBufferedReader(goldstandard.getAbsolutePath());
         while (br.ready()) {
             StringTokenizer s = new StringTokenizer(br.readLine());
             String predictorname = s.nextToken();

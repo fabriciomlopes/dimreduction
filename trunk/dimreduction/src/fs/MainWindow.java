@@ -32,6 +32,7 @@ package fs;
 import agn.AGNRoutines;
 import agn.AGN;
 import agn.CNMeasurements;
+import analisadordecodigo.InputDataPreview;
 import charts.Chart;
 import charts.PrefusePanel;
 import helps.HelpCV;
@@ -88,6 +89,9 @@ public class MainWindow extends javax.swing.JFrame {
     private static JFrame help = null;//janela de exibicao help.
     //Painel para visualizacao da rede com os dados integrados.
     private static PrefusePanel NetworkVisualization = null;
+    
+    public static boolean colSelected;
+    public static boolean lineSelected;
 
     public MainWindow() {
         initComponents();
@@ -139,7 +143,7 @@ public class MainWindow extends javax.swing.JFrame {
         int startcolumn = 0;
         try {
             if (path.endsWith("agn")) {
-                recoverednetwork = IOFile.ReadAGNfromFile(path);
+                recoverednetwork = IOFile.readAGNfromFile(path);
                 featurestitles = recoverednetwork.getLabelstemporalsignal();
                 datatitles = new Vector();
                 for (int i = 0; i < recoverednetwork.getGenes().length; i++) {
@@ -159,15 +163,17 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
             } else {
-                if (jCB_ColumnDescription.isSelected()) {
-                    featurestitles = IOFile.ReadDataFirstRow(path, 0, 0, delimiter);
+//                if (jCB_ColumnDescription.isSelected()) {
+                if (colSelected) {
+                    featurestitles = IOFile.readDataFirstRow(path, 0, 0, delimiter);
                     startrow = 1;
                 }
-                if (jCB_DataTitlesColumns.isSelected()) {
-                    datatitles = IOFile.ReadDataFirstCollum(path, startrow, delimiter);
+//                if (jCB_DataTitlesColumns.isSelected()) {
+                if (lineSelected) {
+                    datatitles = IOFile.readDataFirstCollum(path, startrow, delimiter);
                     startcolumn = 1;
                 }
-                Mo = IOFile.ReadMatrix(path, startrow, startcolumn, delimiter);
+                Mo = IOFile.readMatrix(path, startrow, startcolumn, delimiter);
                 Md = Preprocessing.copyMatrix(Mo);//copy of matrix
             }
 
@@ -318,7 +324,7 @@ public class MainWindow extends javax.swing.JFrame {
         char[][] stestset = null;
 
         if (!jTF_InputTestSE.getText().equals("")) {
-            stestset = IOFile.ReadMatrix(jTF_InputTestSE.getText(), delimiter);
+            stestset = IOFile.readMatrix(jTF_InputTestSE.getText(), delimiter);
         } else {
             stestset = MathRoutines.float2char(Md);
         }
@@ -2106,7 +2112,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jPanel11.add(jSliderBetaCV);
-        jSliderBetaCV.setBounds(470, 100, 330, 57);
+        jSliderBetaCV.setBounds(470, 100, 330, 37);
 
         jS_NrExecutionsCV.setToolTipText("Fill this text box with an integer value, which represents the number of executions of training and test of the cross validation.");
         jPanel11.add(jS_NrExecutionsCV);
@@ -2295,7 +2301,7 @@ public class MainWindow extends javax.swing.JFrame {
         float beta = ((float) jSliderBetaSE.getValue() / 100);
         int search_alg = 0;
         //jTA_SelectedFeaturesSE.setText("");
-        String path = null;//IOFile.SaveFile();
+        String path = null;//IOFile.saveFile();
         StringBuffer txt = null;
         int maxf = (Integer) jS_MaxSetSizeSE.getValue();
         if (q_entropy < 0 || alpha < 0) {
@@ -2340,10 +2346,10 @@ public class MainWindow extends javax.swing.JFrame {
         //inverte os tempos de expressao, de forma que os targets passem
         //a ser os preditores, i.e., os preditores passem a considerar o valor
         //do target no instante de tempo posterior.
-        //IOFile.PrintMatrix(Md);
+        //IOFile.printMatrix(Md);
         if (jCB_TargetsAsPredictors.isSelected()) {
             Md = Preprocessing.InvertColumns(Md);
-            //IOFile.PrintMatrix(Md);
+            //IOFile.printMatrix(Md);
         }
 
         //vetor com os resultados da selecao de caracteristica.
@@ -2410,12 +2416,12 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jBtnSaveResultsCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaveResultsCVActionPerformed
-        IOFile.SaveFile(jTA_SelectedFeaturesCV.getText() + "\n"
+        IOFile.saveFile(jTA_SelectedFeaturesCV.getText() + "\n"
                 + jTA_SaidaCV.getText());
     }//GEN-LAST:event_jBtnSaveResultsCVActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputTestSE.setText(path);
         }
@@ -2696,7 +2702,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBtnSaveResultsSEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaveResultsSEActionPerformed
-        IOFile.SaveFile(jTA_SelectedFeaturesSE.getText() + "\n"
+        IOFile.saveFile(jTA_SelectedFeaturesSE.getText() + "\n"
                 + jTA_SaidaSE.getText());
     }//GEN-LAST:event_jBtnSaveResultsSEActionPerformed
 
@@ -2715,6 +2721,9 @@ public class MainWindow extends javax.swing.JFrame {
         jP_InputData.remove(jT_InputData);
         jP_QuantizedData.remove(jT_QuantizedData);
 
+        InputDataPreview idp = new InputDataPreview(jTF_InputFile.getText());
+        idp.setVisible(true);
+        
         ReadInputData(jTF_InputFile.getText());
 
         if (jCB_TransposeMatrix.isSelected()) {
@@ -2753,7 +2762,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String path = IOFile.OpenPath();
+        String path = IOFile.openPath();
         if (path != null) {
             jTF_InputFile.setText(path);
         }
@@ -2858,12 +2867,12 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         //abrir arquivos .agn
-        String path = IOFile.OpenAGNFile();
+        String path = IOFile.openAGNFile();
         if (path != null) {
             if (NetworkVisualization != null) {
                 jP_NetVis.remove(NetworkVisualization);
             }
-            recoverednetwork = IOFile.ReadAGNfromFile(path);
+            recoverednetwork = IOFile.readAGNfromFile(path);
             NetworkVisualization = new PrefusePanel();
             NetworkVisualization.setNetwork(recoverednetwork);
             NetworkVisualization.CreateNetwork();
