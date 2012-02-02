@@ -198,7 +198,7 @@ public class AGNRoutines {
             DefaultGraphCell node = GraphDR.createVertex(name, x, y, 0, 0, Color.white, false, true);
             //node.setUserObject(agn.getGenes()[gt].getProbsetname());
             vertex.add(node);
-            Color cor = MainMarieAnne.getBGColor(agn.getGenes()[gt]);
+            Color cor = Color.BLACK;//MainMarieAnne.getBGColor(agn.getGenes()[gt]);
 
             GraphConstants.setGradientColor(vertex.get(gt).getAttributes(), cor);
         }
